@@ -1,25 +1,20 @@
-import logo from './logo.svg';
-import './App.css';
+import CryptoBuy from './components/CryptoBuy';
+import React from 'react';
+import Context from './components/context';
+import Orders from './components/orders';
 
-function App() {
+export default function App() {
+  const [orders, setOrders] = React.useState([
+    { id: '471', comment: 'First Order', XRP: { price: 30, quantity: 1 } },
+  ]);
+
+  const addOrder = order =>
+    setOrders([...orders, { id: Math.floor(Math.random() * 1000), ...order }]);
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <Context.Provider value={{ addOrder }}>
+      <CryptoBuy />
+      <Orders />
+    </Context.Provider>
   );
 }
-
-export default App;
